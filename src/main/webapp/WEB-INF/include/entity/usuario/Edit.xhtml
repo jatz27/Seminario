@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsuarioLabel_idUsuario}" for="idUsuario" />
+                        <h:outputText id="idUsuario" value="#{usuarioController.selected.idUsuario}" />
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_nombreUsuario}" for="nombreUsuario" />
+                        <p:inputText id="nombreUsuario" value="#{usuarioController.selected.nombreUsuario}" title="#{myBundle.EditUsuarioTitle_nombreUsuario}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_nombreUsuario}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_clave}" for="clave" />
+                        <p:inputText id="clave" value="#{usuarioController.selected.clave}" title="#{myBundle.EditUsuarioTitle_clave}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_clave}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_tipo}" for="tipo" />
+                        <p:inputText id="tipo" value="#{usuarioController.selected.tipo}" title="#{myBundle.EditUsuarioTitle_tipo}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_tipo}" size="2" maxlength="2"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_idMaestro}" for="idMaestro" />
+                        <p:selectOneMenu id="idMaestro" value="#{usuarioController.selected.idMaestro}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_idMaestro}" converter="maestroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{maestroController.items}"
+                                           var="idMaestroItem"
+                                           itemValue="#{idMaestroItem}"
+                                           itemLabel="#{idMaestroItem.idMaestro.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundle.Save}" update="display,:UsuarioListForm:datalist,:UsuarioListForm:UsuarioDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UsuarioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

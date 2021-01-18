@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AlumnoEditDlg" widgetVar="AlumnoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditAlumnoTitle}" closeOnEscape="true">
+
+            <h:form id="AlumnoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{alumnoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditAlumnoLabel_idAlumno}" for="idAlumno" />
+                        <h:outputText id="idAlumno" value="#{alumnoController.selected.idAlumno}" />
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_primerNombre}" for="primerNombre" />
+                        <p:inputText id="primerNombre" value="#{alumnoController.selected.primerNombre}" title="#{myBundle.EditAlumnoTitle_primerNombre}" required="true" requiredMessage="#{myBundle.EditAlumnoRequiredMessage_primerNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_segundoNombre}" for="segundoNombre" />
+                        <p:inputText id="segundoNombre" value="#{alumnoController.selected.segundoNombre}" title="#{myBundle.EditAlumnoTitle_segundoNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_tercerNombre}" for="tercerNombre" />
+                        <p:inputText id="tercerNombre" value="#{alumnoController.selected.tercerNombre}" title="#{myBundle.EditAlumnoTitle_tercerNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_primerApellido}" for="primerApellido" />
+                        <p:inputText id="primerApellido" value="#{alumnoController.selected.primerApellido}" title="#{myBundle.EditAlumnoTitle_primerApellido}" required="true" requiredMessage="#{myBundle.EditAlumnoRequiredMessage_primerApellido}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_segundoApellido}" for="segundoApellido" />
+                        <p:inputText id="segundoApellido" value="#{alumnoController.selected.segundoApellido}" title="#{myBundle.EditAlumnoTitle_segundoApellido}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{alumnoController.selected.telefono}" title="#{myBundle.EditAlumnoTitle_telefono}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{alumnoController.selected.idGrado}" required="true" requiredMessage="#{myBundle.EditAlumnoRequiredMessage_idGrado}" converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditAlumnoLabel_idSeccion}" for="idSeccion" />
+                        <p:selectOneMenu id="idSeccion" value="#{alumnoController.selected.idSeccion}" required="true" requiredMessage="#{myBundle.EditAlumnoRequiredMessage_idSeccion}" converter="seccionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{seccionController.items}"
+                                           var="idSeccionItem"
+                                           itemValue="#{idSeccionItem}"
+                                           itemLabel="#{idSeccionItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{alumnoController.save}" value="#{myBundle.Save}" update="display,:AlumnoListForm:datalist,:AlumnoListForm:AlumnoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AlumnoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AlumnoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MaestroListForm">
+
+        <p:panel header="#{myBundle.ListMaestroTitle}">
+            <p:contextMenu id="MaestroDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('MaestroListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('MaestroListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('MaestroListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('MaestroListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.MaestroMenuItem_maestroAsigList}" icon="ui-icon-search"  action="#{maestroController.navigateMaestroAsigList}" disabled="#{maestroController.isMaestroAsigListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.MaestroMenuItem_usuarioList}" icon="ui-icon-search"  action="#{maestroController.navigateUsuarioList}" disabled="#{maestroController.isUsuarioListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{maestroController.items}"
+                         lazy="false"
+                         rowKey="#{item.idMaestro}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{maestroController.selected}"
+                         filteredValue="#{maestroController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{maestroController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idMaestro}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MaestroDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MaestroDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MaestroListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idMaestro}" filterBy="#{item.idMaestro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_idMaestro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idMaestro}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerNombre}" filterBy="#{item.primerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_primerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoNombre}" filterBy="#{item.segundoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_segundoNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tercerNombre}" filterBy="#{item.tercerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_tercerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tercerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerApellido}" filterBy="#{item.primerApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_primerApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerApellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoApellido}" filterBy="#{item.segundoApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_segundoApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoApellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellidoCasada}" filterBy="#{item.apellidoCasada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_apellidoCasada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidoCasada}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.correo}" filterBy="#{item.correo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMaestroTitle_correo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.correo}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{maestroController.prepareCreate}" update=":MaestroCreateForm" oncomplete="PF('MaestroCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":MaestroViewForm" oncomplete="PF('MaestroViewDialog').show()" disabled="#{empty maestroController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MaestroEditForm" oncomplete="PF('MaestroEditDialog').show()" disabled="#{empty maestroController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{maestroController.delete}" update=":growl,datalist" disabled="#{empty maestroController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

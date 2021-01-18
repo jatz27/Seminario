@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaestroCreateDlg" widgetVar="MaestroCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMaestroTitle}" closeOnEscape="true">
+
+            <h:form id="MaestroCreateForm">
+
+                <h:panelGroup id="display" rendered="#{maestroController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_primerNombre}" for="primerNombre" />
+                        <p:inputText id="primerNombre" value="#{maestroController.selected.primerNombre}" title="#{myBundle.CreateMaestroTitle_primerNombre}" required="true" requiredMessage="#{myBundle.CreateMaestroRequiredMessage_primerNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_segundoNombre}" for="segundoNombre" />
+                        <p:inputText id="segundoNombre" value="#{maestroController.selected.segundoNombre}" title="#{myBundle.CreateMaestroTitle_segundoNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_tercerNombre}" for="tercerNombre" />
+                        <p:inputText id="tercerNombre" value="#{maestroController.selected.tercerNombre}" title="#{myBundle.CreateMaestroTitle_tercerNombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_primerApellido}" for="primerApellido" />
+                        <p:inputText id="primerApellido" value="#{maestroController.selected.primerApellido}" title="#{myBundle.CreateMaestroTitle_primerApellido}" required="true" requiredMessage="#{myBundle.CreateMaestroRequiredMessage_primerApellido}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_segundoApellido}" for="segundoApellido" />
+                        <p:inputText id="segundoApellido" value="#{maestroController.selected.segundoApellido}" title="#{myBundle.CreateMaestroTitle_segundoApellido}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_apellidoCasada}" for="apellidoCasada" />
+                        <p:inputText id="apellidoCasada" value="#{maestroController.selected.apellidoCasada}" title="#{myBundle.CreateMaestroTitle_apellidoCasada}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{maestroController.selected.telefono}" title="#{myBundle.CreateMaestroTitle_telefono}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{maestroController.selected.correo}" title="#{myBundle.CreateMaestroTitle_correo}" size="50" maxlength="50"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maestroController.saveNew}" value="#{myBundle.Save}" update="display,:MaestroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MaestroCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('MaestroCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

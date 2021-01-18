@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaestroViewDlg" widgetVar="MaestroViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewMaestroTitle}" closeOnEscape="true">
+
+            <h:form id="MaestroViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{maestroController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_idMaestro}"/>
+                        <h:outputText value="#{maestroController.selected.idMaestro}" title="#{myBundle.ViewMaestroTitle_idMaestro}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_primerNombre}"/>
+                        <h:outputText value="#{maestroController.selected.primerNombre}" title="#{myBundle.ViewMaestroTitle_primerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_segundoNombre}"/>
+                        <h:outputText value="#{maestroController.selected.segundoNombre}" title="#{myBundle.ViewMaestroTitle_segundoNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_tercerNombre}"/>
+                        <h:outputText value="#{maestroController.selected.tercerNombre}" title="#{myBundle.ViewMaestroTitle_tercerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_primerApellido}"/>
+                        <h:outputText value="#{maestroController.selected.primerApellido}" title="#{myBundle.ViewMaestroTitle_primerApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_segundoApellido}"/>
+                        <h:outputText value="#{maestroController.selected.segundoApellido}" title="#{myBundle.ViewMaestroTitle_segundoApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_apellidoCasada}"/>
+                        <h:outputText value="#{maestroController.selected.apellidoCasada}" title="#{myBundle.ViewMaestroTitle_apellidoCasada}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_telefono}"/>
+                        <h:outputText value="#{maestroController.selected.telefono}" title="#{myBundle.ViewMaestroTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewMaestroLabel_correo}"/>
+                        <h:outputText value="#{maestroController.selected.correo}" title="#{myBundle.ViewMaestroTitle_correo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('MaestroViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

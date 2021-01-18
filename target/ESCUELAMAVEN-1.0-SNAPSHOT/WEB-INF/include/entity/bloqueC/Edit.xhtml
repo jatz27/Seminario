@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BloqueCEditDlg" widgetVar="BloqueCEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditBloqueCTitle}" closeOnEscape="true">
+
+            <h:form id="BloqueCEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{bloqueCController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditBloqueCLabel_idBloqueC}" for="idBloqueC" />
+                        <h:outputText id="idBloqueC" value="#{bloqueCController.selected.idBloqueC}" />
+
+                        <p:outputLabel value="#{myBundle.EditBloqueCLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{bloqueCController.selected.descripcion}" title="#{myBundle.EditBloqueCTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditBloqueCRequiredMessage_descripcion}" size="30" maxlength="30"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bloqueCController.save}" value="#{myBundle.Save}" update="display,:BloqueCListForm:datalist,:BloqueCListForm:BloqueCDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BloqueCEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BloqueCEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

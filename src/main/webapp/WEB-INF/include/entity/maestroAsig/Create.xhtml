@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaestroAsigCreateDlg" widgetVar="MaestroAsigCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMaestroAsigTitle}" closeOnEscape="true">
+
+            <h:form id="MaestroAsigCreateForm">
+
+                <h:panelGroup id="display" rendered="#{maestroAsigController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroAsigLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{maestroAsigController.selected.idGrado}" required="true" requiredMessage="#{myBundle.CreateMaestroAsigRequiredMessage_idGrado}" converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroAsigLabel_idMaestro}" for="idMaestro" />
+                        <p:selectOneMenu id="idMaestro" value="#{maestroAsigController.selected.idMaestro}" required="true" requiredMessage="#{myBundle.CreateMaestroAsigRequiredMessage_idMaestro}" converter="maestroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{maestroController.items}"
+                                           var="idMaestroItem"
+                                           itemValue="#{idMaestroItem}"
+                                           itemLabel="#{idMaestroItem.idMaestro.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMaestroAsigLabel_idSeccion}" for="idSeccion" />
+                        <p:selectOneMenu id="idSeccion" value="#{maestroAsigController.selected.idSeccion}" required="true" requiredMessage="#{myBundle.CreateMaestroAsigRequiredMessage_idSeccion}" converter="seccionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{seccionController.items}"
+                                           var="idSeccionItem"
+                                           itemValue="#{idSeccionItem}"
+                                           itemLabel="#{idSeccionItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maestroAsigController.saveNew}" value="#{myBundle.Save}" update="display,:MaestroAsigListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MaestroAsigCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('MaestroAsigCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlumnoViewDlg" widgetVar="AlumnoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAlumnoTitle}" closeOnEscape="true">
+
+            <h:form id="AlumnoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{alumnoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_idAlumno}"/>
+                        <h:outputText value="#{alumnoController.selected.idAlumno}" title="#{myBundle.ViewAlumnoTitle_idAlumno}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_primerNombre}"/>
+                        <h:outputText value="#{alumnoController.selected.primerNombre}" title="#{myBundle.ViewAlumnoTitle_primerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_segundoNombre}"/>
+                        <h:outputText value="#{alumnoController.selected.segundoNombre}" title="#{myBundle.ViewAlumnoTitle_segundoNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_tercerNombre}"/>
+                        <h:outputText value="#{alumnoController.selected.tercerNombre}" title="#{myBundle.ViewAlumnoTitle_tercerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_primerApellido}"/>
+                        <h:outputText value="#{alumnoController.selected.primerApellido}" title="#{myBundle.ViewAlumnoTitle_primerApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_segundoApellido}"/>
+                        <h:outputText value="#{alumnoController.selected.segundoApellido}" title="#{myBundle.ViewAlumnoTitle_segundoApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_telefono}"/>
+                        <h:outputText value="#{alumnoController.selected.telefono}" title="#{myBundle.ViewAlumnoTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_idGrado}"/>
+                        <h:outputText value="#{alumnoController.selected.idGrado.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnoLabel_idSeccion}"/>
+                        <h:outputText value="#{alumnoController.selected.idSeccion.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AlumnoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

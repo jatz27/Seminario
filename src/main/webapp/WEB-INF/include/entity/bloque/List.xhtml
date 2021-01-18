@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BloqueListForm">
+
+        <p:panel header="#{myBundle.ListBloqueTitle}">
+            <p:contextMenu id="BloqueDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('BloqueListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('BloqueListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('BloqueListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('BloqueListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.BloqueMenuItem_idAlumno}" icon="ui-icon-search"  actionListener="#{bloqueController.prepareIdAlumno}" update=":AlumnoViewForm" oncomplete="PF('AlumnoViewDialog').show()" disabled="#{empty bloqueController.selected.idAlumno}"/>  
+                <p:menuitem value="#{myBundle.BloqueMenuItem_idBloqueCat}" icon="ui-icon-search"  actionListener="#{bloqueController.prepareIdBloqueCat}" update=":BloqueCViewForm" oncomplete="PF('BloqueCViewDialog').show()" disabled="#{empty bloqueController.selected.idBloqueCat}"/>  
+                <p:menuitem value="#{myBundle.BloqueMenuItem_idGrado}" icon="ui-icon-search"  actionListener="#{bloqueController.prepareIdGrado}" update=":GradoViewForm" oncomplete="PF('GradoViewDialog').show()" disabled="#{empty bloqueController.selected.idGrado}"/>  
+                <p:menuitem value="#{myBundle.BloqueMenuItem_idMateria}" icon="ui-icon-search"  actionListener="#{bloqueController.prepareIdMateria}" update=":MateriaViewForm" oncomplete="PF('MateriaViewDialog').show()" disabled="#{empty bloqueController.selected.idMateria}"/>  
+                <p:menuitem value="#{myBundle.BloqueMenuItem_idSeccion}" icon="ui-icon-search"  actionListener="#{bloqueController.prepareIdSeccion}" update=":SeccionViewForm" oncomplete="PF('SeccionViewDialog').show()" disabled="#{empty bloqueController.selected.idSeccion}"/>  
+                <p:menuitem value="#{myBundle.BloqueMenuItem_actividadList}" icon="ui-icon-search"  action="#{bloqueController.navigateActividadList}" disabled="#{bloqueController.isActividadListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{bloqueController.items}"
+                         lazy="false"
+                         rowKey="#{item.idBloque}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{bloqueController.selected}"
+                         filteredValue="#{bloqueController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{bloqueController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idBloque}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BloqueDataTableContextMenu" listener="#{bloqueController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BloqueDataTableContextMenu" listener="#{bloqueController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{bloqueController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BloqueListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idBloque}" filterBy="#{item.idBloque}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idBloque}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBloque}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.punteo}" filterBy="#{item.punteo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_punteo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.punteo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idAlumno.idAlumno}" filterBy="#{item.idAlumno.idAlumno}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idAlumno}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAlumno.idAlumno}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idBloqueCat.descripcion}" filterBy="#{item.idBloqueCat.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idBloqueCat}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBloqueCat.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idGrado.descripcion}" filterBy="#{item.idGrado.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idGrado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idGrado.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idMateria.descripcion}" filterBy="#{item.idMateria.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idMateria}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idMateria.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idSeccion.descripcion}" filterBy="#{item.idSeccion.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBloqueTitle_idSeccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSeccion.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{bloqueController.prepareCreate}" update=":BloqueCreateForm" oncomplete="PF('BloqueCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":BloqueViewForm" oncomplete="PF('BloqueViewDialog').show()" disabled="#{empty bloqueController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":BloqueEditForm" oncomplete="PF('BloqueEditDialog').show()" disabled="#{empty bloqueController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{bloqueController.delete}" update=":growl,datalist" disabled="#{empty bloqueController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

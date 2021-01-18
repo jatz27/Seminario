@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ActividadCreateDlg" widgetVar="ActividadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateActividadTitle}" closeOnEscape="true">
+
+            <h:form id="ActividadCreateForm">
+
+                <h:panelGroup id="display" rendered="#{actividadController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateActividadLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{actividadController.selected.descripcion}" title="#{myBundle.CreateActividadTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateActividadRequiredMessage_descripcion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateActividadLabel_punteo}" for="punteo" />
+                        <p:inputText id="punteo" value="#{actividadController.selected.punteo}" title="#{myBundle.CreateActividadTitle_punteo}" required="true" requiredMessage="#{myBundle.CreateActividadRequiredMessage_punteo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateActividadLabel_idBloque}" for="idBloque" />
+                        <p:selectOneMenu id="idBloque" value="#{actividadController.selected.idBloque}" required="true" requiredMessage="#{myBundle.CreateActividadRequiredMessage_idBloque}" converter="bloqueConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bloqueController.items}"
+                                           var="idBloqueItem"
+                                           itemValue="#{idBloqueItem}"
+                                           itemLabel="#{idBloqueItem.idBloque.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{actividadController.saveNew}" value="#{myBundle.Save}" update="display,:ActividadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ActividadCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ActividadCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

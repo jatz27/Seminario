@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BloqueEditDlg" widgetVar="BloqueEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditBloqueTitle}" closeOnEscape="true">
+
+            <h:form id="BloqueEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{bloqueController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditBloqueLabel_idBloque}" for="idBloque" />
+                        <h:outputText id="idBloque" value="#{bloqueController.selected.idBloque}" />
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_punteo}" for="punteo" />
+                        <p:inputText id="punteo" value="#{bloqueController.selected.punteo}" title="#{myBundle.EditBloqueTitle_punteo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_idAlumno}" for="idAlumno" />
+                        <p:selectOneMenu id="idAlumno" value="#{bloqueController.selected.idAlumno}" required="true" requiredMessage="#{myBundle.EditBloqueRequiredMessage_idAlumno}" converter="alumnoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{alumnoController.items}"
+                                           var="idAlumnoItem"
+                                           itemValue="#{idAlumnoItem}"
+                                           itemLabel="#{idAlumnoItem.idAlumno.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_idBloqueCat}" for="idBloqueCat" />
+                        <p:selectOneMenu id="idBloqueCat" value="#{bloqueController.selected.idBloqueCat}" required="true" requiredMessage="#{myBundle.EditBloqueRequiredMessage_idBloqueCat}" converter="bloqueCConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bloqueCController.items}"
+                                           var="idBloqueCatItem"
+                                           itemValue="#{idBloqueCatItem}"
+                                           itemLabel="#{idBloqueCatItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{bloqueController.selected.idGrado}" required="true" requiredMessage="#{myBundle.EditBloqueRequiredMessage_idGrado}" converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_idMateria}" for="idMateria" />
+                        <p:selectOneMenu id="idMateria" value="#{bloqueController.selected.idMateria}" required="true" requiredMessage="#{myBundle.EditBloqueRequiredMessage_idMateria}" converter="materiaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{materiaController.items}"
+                                           var="idMateriaItem"
+                                           itemValue="#{idMateriaItem}"
+                                           itemLabel="#{idMateriaItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditBloqueLabel_idSeccion}" for="idSeccion" />
+                        <p:selectOneMenu id="idSeccion" value="#{bloqueController.selected.idSeccion}" required="true" requiredMessage="#{myBundle.EditBloqueRequiredMessage_idSeccion}" converter="seccionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{seccionController.items}"
+                                           var="idSeccionItem"
+                                           itemValue="#{idSeccionItem}"
+                                           itemLabel="#{idSeccionItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bloqueController.save}" value="#{myBundle.Save}" update="display,:BloqueListForm:datalist,:BloqueListForm:BloqueDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BloqueEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BloqueEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

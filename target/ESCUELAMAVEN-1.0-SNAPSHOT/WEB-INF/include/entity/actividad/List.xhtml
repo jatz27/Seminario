@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ActividadListForm">
+
+        <p:panel header="#{myBundle.ListActividadTitle}">
+            <p:contextMenu id="ActividadDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ActividadListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ActividadListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ActividadListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ActividadListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ActividadMenuItem_idBloque}" icon="ui-icon-search"  actionListener="#{actividadController.prepareIdBloque}" update=":BloqueViewForm" oncomplete="PF('BloqueViewDialog').show()" disabled="#{empty actividadController.selected.idBloque}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{actividadController.items}"
+                         lazy="false"
+                         rowKey="#{item.idActividad}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{actividadController.selected}"
+                         filteredValue="#{actividadController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{actividadController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idActividad}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ActividadDataTableContextMenu" listener="#{actividadController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ActividadDataTableContextMenu" listener="#{actividadController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{actividadController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ActividadListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idActividad}" filterBy="#{item.idActividad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListActividadTitle_idActividad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idActividad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListActividadTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.punteo}" filterBy="#{item.punteo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListActividadTitle_punteo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.punteo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idBloque.idBloque}" filterBy="#{item.idBloque.idBloque}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListActividadTitle_idBloque}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBloque.idBloque}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{actividadController.prepareCreate}" update=":ActividadCreateForm" oncomplete="PF('ActividadCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ActividadViewForm" oncomplete="PF('ActividadViewDialog').show()" disabled="#{empty actividadController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ActividadEditForm" oncomplete="PF('ActividadEditDialog').show()" disabled="#{empty actividadController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{actividadController.delete}" update=":growl,datalist" disabled="#{empty actividadController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

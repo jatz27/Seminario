@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BloqueViewDlg" widgetVar="BloqueViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewBloqueTitle}" closeOnEscape="true">
+
+            <h:form id="BloqueViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{bloqueController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idBloque}"/>
+                        <h:outputText value="#{bloqueController.selected.idBloque}" title="#{myBundle.ViewBloqueTitle_idBloque}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_punteo}"/>
+                        <h:outputText value="#{bloqueController.selected.punteo}" title="#{myBundle.ViewBloqueTitle_punteo}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idAlumno}"/>
+                        <h:outputText value="#{bloqueController.selected.idAlumno.idAlumno}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idBloqueCat}"/>
+                        <h:outputText value="#{bloqueController.selected.idBloqueCat.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idGrado}"/>
+                        <h:outputText value="#{bloqueController.selected.idGrado.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idMateria}"/>
+                        <h:outputText value="#{bloqueController.selected.idMateria.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewBloqueLabel_idSeccion}"/>
+                        <h:outputText value="#{bloqueController.selected.idSeccion.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('BloqueViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
